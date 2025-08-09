@@ -1,0 +1,80 @@
+
+{% extends "base.html" %} 
+{% block content %}
+
+
+<div class="account-container">
+    {% if messages %}
+    {% for message in messages %}
+      <p class="message">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+  <div class="account-header">
+    <div class="account-header-2">
+      {% include "components/custom-profile.html" with img=author.profile_pic.url size=90%}
+    <div class="user-info">
+      <h2>{{ author.get_full_name }}</h2>
+      <p class="email">{{ author.email }}</p>           
+      {% comment %} <p class="joined">Joined: {{ user.created_at|date:"F j, Y" }}</p> {% endcomment %}
+    </div>
+    </div>
+    <div class="account-author-meta">
+      <span>followers : {{author.followers_count}}</span>
+      <span>blogs : {{author.blog_count}}</span>
+    </div>
+  </div>
+  <hr class="divider" />
+  <a href="/account/author/{{author.pk}}" class="a-button">Blogs</a>
+  <a href="/account/author/{{author.pk}}/?q=author-followers"class="a-button">Followers</a>
+    <hr class="divider" />
+
+
+
+  {% if not request.GET.q  %}
+        <h3>Blogs</h3>
+    <ul class="blog-list">
+      {% for blog in author.blog_set.all %}
+       {% include "components/blog-card.html" with blog=blog %}
+           {% empty %}
+    <p class="no-blogs">You haven't posted any blogs yet.</p>
+      {% endfor %}
+    </ul> 
+    {% endif %}
+
+
+
+
+  {% if request.GET.q == 'author-followers'  %}
+    {% for follower in author_followers %}
+     <div class="blog-meta">
+  <a href="{% url 'author-account' follower.pk %}">
+  <div class="blog-meta">
+    {% include 'components/custom-profile.html' with img=follower.user.profile_pic.url size=45 %}
+    <div class="author-time-ctn">
+      <span class="author-name">{{ follower.user.get_full_name }} </span>
+      {{follower.user.email }}
+    </div>
+  </div>
+  </a>
+  <div>
+    {% empty %}
+      <p>no Followers</p>
+    {% endfor %}
+  {% endif %}
+
+</div>
+<script>
+  function toggleDropdown(button) {
+    const menu = button.nextElementSibling;
+    menu.classList.toggle('show-dropdown');
+  
+    // Close dropdown on outside click
+    document.addEventListener('click', function handleOutsideClick(e) {
+      if (!button.parentNode.contains(e.target)) {
+        menu.classList.remove('show-dropdown');
+        document.removeEventListener('click', handleOutsideClick); // clean up
+      }
+    });
+  }
+</script>
+{% endblock content %}

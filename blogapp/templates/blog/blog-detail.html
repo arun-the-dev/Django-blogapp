@@ -1,0 +1,89 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block content %}
+
+<div class="blog-container">
+  <div class="blog-detail-container">
+
+
+      <div class="blog-back">
+    <a onclick="history.back()" class="back-button">← back</a>
+  </div>
+  {% if blog.category %}
+  <span class="category-badge">
+    <a href="{% url "blog-list" %}?category={{blog.category.pk}}">{{ blog.category }}</a>
+  </span>
+  {% endif %}
+  <h1 class="blog-title">{{ blog.title }}</h1>
+
+
+
+  
+<div class="blog-meta">
+  <a href="{% url 'author-account' blog.author.pk %}">
+  <div class="blog-meta">
+    {% include 'components/custom-profile.html' with img=blog.author.profile_pic.url size=45 %}
+    <div class="author-time-ctn">
+      <span class="author-name">{{ blog.author_full_name }} </span>
+      <span class="time-posted">{{blog.time_posted_ago}}</span>
+    </div>
+    {% comment %} {{ blog.created_at|date:"F j, Y, g:i a" }} {% endcomment %}
+  </div>
+  </a>
+  <div>
+    {% if request.user.is_authenticated %}
+    <button class="follow-button" onclick="toggleFollow(this,{{blog.author.pk}},'{{csrf_token}}')">{% if is_follower %}Following {% else %}Follow {% endif %}</button>
+    {% else %}
+    <a href="{% url "login" %}" class="follow-button"> follow </a>
+    {% endif %}
+  </div>
+</div>
+
+
+
+  <div class="like-comment-ctn">
+    <form method="post" action="{% url 'blog-like' blog.pk%}">
+      {% csrf_token %}
+       {% if blog.is_user_liked %}
+      <span>
+        <button>
+          <img src="{% static 'defaults/liked.png' %}" alt="" class="like" />
+        </button>
+      </span>
+      {% else %}
+      <span>
+        <button>
+          <img src="{% static 'defaults/like.png' %}" alt="" class="like" />
+        </button>
+      </span> 
+
+      {% endif %}
+      <span>{{blog.like_count}}</span>
+    </form>
+
+    <span>
+      <a href="#comment-section"><img src="{% static 'defaults/comment.png' %}" alt="" class="comment"
+      /></a>
+    </span>
+  </div>
+
+  {% if blog.main_pic.url %}
+  <div class="blog-image-wrapper">
+    <img src="{{ blog.main_pic.url }}" alt="Blog image" class="blog-image" />
+  </div>
+  {% endif %}
+
+  <div class="blog-content">{{ blog.content|safe }}</div>
+
+
+  {% include "components/blog-comments.html" %}
+  </div>
+  <div class="similar-posts-container">
+  <span class="similar-posts">Similar posts</span>
+{% for blog in similar_posts %}
+  {% include 'components/blog-card.html' with blog=blog %}
+{% endfor %}
+</div>
+</div>
+
+{% endblock %}

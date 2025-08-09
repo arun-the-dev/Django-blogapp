@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "components/sortby.html" %}
+<div style="margin-top:30px;margin-bottom:30px;">
+  {% for blog in blogs %}
+  {% include 'components/blog-card.html' with blog=blog %}
+  {% empty %}
+  <h3>No Blogs Found...</h3>
+  {% endfor %}
+  <div class="pagination">
+    <ul class="pagination-list"> 
+      {% if page_obj.has_previous %}
+        <li><a href="?page=1" class="btn" title="First page">&laquo;</a></li>
+        <li><a href="?page={{ page_obj.previous_page_number }}" class="btn" title="Previous page">&lsaquo;</a></li>
+      {% else %}
+        <li><span class="btn disabled">&laquo;</span></li>
+        <li><span class="btn disabled">&lsaquo;</span></li>
+      {% endif %}
+  
+      <li><span class="btn current">Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+  
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}" class="btn" title="Next page">&rsaquo;</a></li>
+        <li><a href="?page={{ page_obj.paginator.num_pages }}" class="btn" title="Last page">&raquo;</a></li>
+      {% else %}
+        <li><span class="btn disabled">&rsaquo;</span></li>
+        <li><span class="btn disabled">&raquo;</span></li>
+      {% endif %}
+    </ul>
+  </div>
+  
+</div>
+
+{% endblock content %}

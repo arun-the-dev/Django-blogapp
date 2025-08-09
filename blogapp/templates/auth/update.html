@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  <!-- Static CSS (you can move to an external file if needed) -->
+
+</head>
+<body>
+
+  {% load static %}
+
+  {% if messages %}
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="register-form">
+    {% csrf_token %}
+
+    <!-- Profile photo upload -->
+    <div class="profile-preview" onclick="document.getElementById('profile_input').click()">
+      <input type="file" id="profile_input" name="profile_pic_field" style="display: none;" onchange="handleInputClick(event)">
+      <img src="{{user.profile_pic.url}}" id="profile_img" alt="Profile Photo">
+      <small>Click to upload profile photo</small>
+    </div>
+
+    <!-- First Name -->
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name_field" value="{{user.first_name}}"required>
+
+    <!-- Last Name -->
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name_field"  value="{{user.last_name}}" required>
+
+    <!-- Email -->
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email_field" value="{{user.email}}" required>
+    <!-- Submit -->
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    function handleInputClick(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const image_url = URL.createObjectURL(file);
+        document.getElementById("profile_img").src = image_url;
+      }
+    }
+  </script>
+</body>
+</html>

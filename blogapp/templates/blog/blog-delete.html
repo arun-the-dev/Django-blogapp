@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block overlays %}
+<div class="overlay-backdrop">
+  <form method="post" class="overlay-form">
+    {% csrf_token %}
+    <h2>Are you sure you want to delete this?</h2>
+    <button type="submit">OK</button>
+    <button type="button" onclick="history.back()">Cancel</button>
+  </form>
+</div>
+{% endblock overlays %}

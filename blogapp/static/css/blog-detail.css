@@ -1,0 +1,153 @@
+.blog-container {
+  /* margin: 40px auto; */
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+  color: #222;
+  margin-top: 20px;
+  /* margin-left: 30vh; */
+  display: flex;
+  column-gap: 6vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.blog-detail-container{
+  max-width: 80%;
+}
+.similar-posts-container{
+  width: 90vh;
+}
+.blog-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.blog-meta {
+  font-size: 0.8rem;
+  color: black;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+}
+.blog-meta .author-time-ctn{
+  display: flex;
+  flex-direction: column;
+}
+.blog-meta .author-time-ctn :nth-child(1){
+  font-weight: 600;
+  font-size: 1.8vh;
+}
+.blog-meta .follow-button{
+  background-color: white;
+  padding: 6px 20px 6px 20px;
+  letter-spacing: .7px;
+  color: grey;
+  border-radius: 16px;
+  border: solid lightgrey 1.7px;
+  transition: ease .3s;
+  cursor: pointer;
+
+}
+.blog-meta .follow-button:hover{
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+.blog-meta .time-posted{
+  color: grey;
+}
+.blog-image-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.blog-image-wrapper img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.like-comment-ctn{
+  margin-left: 10px;
+  display: flex;
+  column-gap: 1.5vh;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.like-comment-ctn span{
+  font-size: 2vh;
+  color: grey;
+}
+.like-comment-ctn button{
+  background:none;
+  outline: none;
+  border: none;
+}
+.like{
+  width: 16px;
+  height: 16px;
+}
+.like-comment-ctn .comment{
+  width: 18px;
+  height: 18px;
+}
+.blog-image {
+  width: 100%;
+  /* height: 400px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.blog-content {
+  line-height: 1.7;
+  font-size: 1.05rem;
+  margin-bottom: 40px;
+}
+
+.blog-back {
+  text-align: left;
+  top: 14vh;
+  left: 10vh;
+  position: fixed;
+}
+
+.back-button {
+  text-decoration: none;
+  color: #0066cc;
+  border: 1px solid #0066cc;
+  padding: 3px 10px;
+  border-radius: 4px;
+  transition: 0.3s;
+  text-align: center;
+  vertical-align: center;
+}
+
+.back-button:hover {
+  background-color: #0066cc;
+  color: #fff;
+}
+.profile-container{
+  width:44px;
+  height:44px;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+}
+.profile-container img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.similar-posts{
+  margin-bottom: 10px;
+}

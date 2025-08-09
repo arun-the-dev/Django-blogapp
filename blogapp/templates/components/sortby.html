@@ -1,0 +1,26 @@
+<div class="sort-filter-bar">
+    <div class="sort-filter-inner">
+      <div class="sort-group">
+        <label for="sort">Sort by:</label>
+        <select id="sort" onchange="handleSortChange(this)">
+          <option value="" {% if request.GET.sort == 'recent' %}selected{% endif %}>Most Recent</option>
+          <option value="popular" {% if request.GET.sort == 'popular' %}selected{% endif %}>Most Liked</option>
+          <option value="title" {% if request.GET.sort == 'title' %}selected{% endif %}>Title (A–Z)</option>
+        </select>
+      </div>
+  
+      <div class="filter-group">
+        <label for="category">Category:</label>
+        <select id="category" onchange="handleCategoryChange(this)">
+          <option value="" {% if not request.GET.category %}selected{% endif %}>All</option>
+          {% for cat in categories %}
+            <option value="{{ cat.pk }}" 
+              {% if request.GET.category == cat.pk|stringformat:"s" %}selected{% endif %}>
+              {{ cat.category }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>      
+  </div>
+  

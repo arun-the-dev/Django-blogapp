@@ -1,0 +1,31 @@
+{# Comment Form #}
+<div class="comment-section" id ="comment-section">
+{% if user.is_authenticated %}
+  <form method="post" action="{% url "blog-comment" blog.pk%}">
+    {% csrf_token %}
+    <textarea name="comment-field" rows="3" placeholder="Write a comment..." required maxlength=300></textarea>
+    <button type="submit">Post Comment</button>
+  </form>
+{% else %}
+  <p><a href="{% url 'login' %}">Login</a> to comment.</p>
+{% endif %}
+<br>
+<hr />
+{% comment %} <br> {% endcomment %}
+{# Comment List #}
+  {% for comment in blog.comments_set.all %}
+    <div class="comment">
+      <div class="comment-profile-ctn">
+        {% include 'components/custom-profile.html' with img=comment.user.profile_pic.url %}
+        <div class="comment-user-time-ctn">
+          <strong>{{ comment.user.get_full_name }}</strong>
+          <small>{{ comment.time_posted_ago}}</small>
+        </div>
+      </div>
+      
+      <p>{{ comment.comment }}</p>
+    </div>
+  {% empty %}
+    <p>No comments yet.</p>
+  {% endfor %}
+</div>

@@ -1,0 +1,92 @@
+{% extends "base.html" %} 
+{% block content %}
+
+
+<div class="account-container">
+    {% if messages %}
+    {% for message in messages %}
+      <p class="message">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+  <div class="account-header">
+<a href="{% url "update" %}">
+
+  {% include "components/custom-profile.html" with img=user.profile_pic.url size=90%}
+</a>
+
+    <div class="user-info">
+      <h2>{{ user.get_full_name }}</h2>
+      <p class="email">{{ user.email }}</p>
+      {% comment %} <p class="joined">Joined: {{ user.created_at|date:"F j, Y" }}</p> {% endcomment %}
+    </div>
+  </div>
+
+  <hr class="divider" />
+  <a href="/account/" class="a-button">Your Blogs</a>
+  <a href="/account/?q=user-like-blogs"class="a-button">Liked Blogs</a>
+  <a href="/account/?q=user-following-authors"class="a-button">Following</a>
+    <hr class="divider" />
+
+
+
+    {% if blogs %}
+        <h3>Your Blogs</h3>
+    <ul class="blog-list">
+      {% for blog in blogs %}
+       {% include "components/blog-card.html" with blog=blog actions=True %}
+           {% empty %}
+    <p class="no-blogs">You haven't posted any blogs yet.</p>
+      {% endfor %}
+    </ul>
+
+    {% endif %}
+
+
+  {% if request.GET.q == 'user-like-blogs'  %}
+        <h3>Liked Blogs</h3>
+    {% for blog in user_liked_blogs %}
+      {% include "components/blog-card.html" with blog=blog.content_object%}
+    {% empty %}
+      <p>no blogs liked</p>
+    {% endfor %}
+  {% endif %}
+  {% if user_following_authors  %}
+    {% for following in user_following_authors %}
+    <div class="blog-meta">
+  <a href="{% url 'author-account' following.author.pk %}">
+  <div class="blog-meta">
+    {% include 'components/custom-profile.html' with img=following.author.profile_pic.url size=45 %}
+    <div class="author-time-ctn">
+      <span class="author-name">{{ following.author.get_full_name }} </span>
+      {{following.author.email }}
+    </div>
+  </div>
+  </a>
+  <div>
+    {% if request.user.is_authenticated %}
+    <button class="follow-button" onclick="toggleFollow(this,{{following.author.pk}},'{{csrf_token}}')">Following </button>
+    {% else %}
+    <a href="{% url "login" %}" class="follow-button"> follow </a>
+    {% endif %}
+  </div>
+</div>
+    {% empty %}
+      <p>no user_following_authors liked</p>
+    {% endfor %}
+  {% endif %}
+</div>
+<script>
+  function toggleDropdown(button) {
+    const menu = button.nextElementSibling;
+    menu.classList.toggle('show-dropdown');
+  
+    // Close dropdown on outside click
+    document.addEventListener('click', function handleOutsideClick(e) {
+      if (!button.parentNode.contains(e.target)) {
+        menu.classList.remove('show-dropdown');
+        document.removeEventListener('click', handleOutsideClick); // clean up
+      }
+    });
+  }
+</script>
+{% endblock content %}

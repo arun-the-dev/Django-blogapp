@@ -1,0 +1,32 @@
+{% load static %}
+<div class="blog-card-horizontal {% if forloop.counter|divisibleby:2 %}{% else %}card-reverse{% endif %}" style="--size:{{size|default:45}}px">
+  {% if actions %}
+  <div class='dropdown-wrapper'>
+    <button class='dots-btn' onclick='toggleDropdown(this)'>⋮</button>
+    <div class='dropdown-menu'>
+      <a href='{% url "blog-update" blog.pk%}'>Edit</a>
+      <a href='{% url "blog-delete" blog.pk%}'>Delete</a>
+    </div>
+  </div>
+
+  {% endif %}
+  <div class="blog-text">
+    {% if blog.category %}
+  <span class="category-badge"><a href="{% url "blog-list" %}?category={{blog.category.pk}}">{{ blog.category }}</a></span>
+  {% endif %}
+    <h2 class="blog-title">
+      <a href="{% url 'blog-detail' blog.pk%}">{{ blog.title }}</a>
+    </h2>
+    <p class="blog-snippet">{{ blog.content|truncatechars:400|safe }}</p>
+    {% comment %} <div class="blog-meta">
+      <span>{{ blog.author_full_name }}</span>
+      <span>•</span>
+      <span>{{ blog.created_at|date:"M d, Y" }}</span>
+    </div> {% endcomment %}
+  </div>
+  <div class="blog-card-image">
+    <a href="">
+      <img src="{{ blog.main_pic.url }}" alt="{{ blog.title }}">
+    </a>
+  </div>
+</div>

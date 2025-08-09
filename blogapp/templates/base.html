@@ -1,0 +1,47 @@
+{% load static %}
+{% load django_browser_reload %}
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static "css/navbar.css" %}">
+    <link rel="stylesheet" href="{% static "css/blog-card.css" %}">
+    <link rel="stylesheet" href="{% static 'css/blog-comments.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog-detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog-list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog-create.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog-delete.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sortby.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom-profile.css' %}">
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="{% static "js/script.js" %}" defer></script>
+    <title>{% block title %}Blog app{% endblock title %}</title>
+    {% block extrahead %}
+  {{ form.media }}
+{% endblock %}
+
+
+  </head>
+  <body>
+
+    {% include "components/navbar.html" with user=request.user%}
+
+    <div class="container">
+      {% block content %}{% endblock content %}</div>
+    
+  </body>
+  {% block overlays %}{% endblock overlays %}
+</html>

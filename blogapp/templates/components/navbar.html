@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <a href="{% url "blog-list" %}">
+    <div class="navbar-title">📝 Blog App</div>
+
+  </a>
+  
+    <div class="navbar-search">
+     <form action="{% url "blog-list" %}" method="get">
+      <input type="text" name="search"placeholder="Search blogs...">
+     </form> 
+    </div>
+  
+    <div class="navbar-auth">
+      {% if user.is_authenticated %}
+      <a href="{% url 'blog-create' %}" class="navbar-button">📝 Write</a>
+      <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+        <button class="navbar-button" type="submit">Logout</button>
+      </form>
+
+        <a href="{% url "user-account" %}">
+          {% include "components/custom-profile.html" with img=user.profile_pic.url size=50 %}
+        </a>
+        
+      {% else %}
+      <a href="/register/">Sign Up</a>
+      <a href="/login/">Login</a>
+      {% endif %}
+    </div>
+  </nav>
+  

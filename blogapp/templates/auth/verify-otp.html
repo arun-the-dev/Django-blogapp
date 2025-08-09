@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Otp Verification</title>
+  <link rel="stylesheet" href="{% static 'css/forget-password.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Otp Verfication</h2>
+    {% if messages%}
+    {% for message in messages %} 
+      <div class="error-message-container">
+        <span class="error-message">{{message}}</span>
+      </div>
+    {% endfor %}
+    {% endif %}
+      {% if otp_sent %}
+      <div class="form-group">
+        <form method="post" action="{% url "verify-otp" %}">
+          {% csrf_token %}
+          <label for="otp">Enter OTP sent to {{email}}:</label>
+          <input type="text" name="otp" id="otp" maxlength="4" required >
+          <button type="submit" class="btn">Verify OTP</button>
+        </form>
+      </div>
+      {% endif %}
+
+
+    <div class="footer">
+      <a href="{% url 'login' %}">Back to Login</a>
+    </div>
+  </div>
+</body>
+</html>
