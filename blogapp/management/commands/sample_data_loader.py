@@ -70,15 +70,17 @@ class Command(BaseCommand):
                 comment_count += 1
         self.stdout.write(self.style.SUCCESS(f"✅ Created {comment_count} comments."))
 
-        # ✅ Create 1500+ Likes (4–6 per blog)
+       # ✅ Create 1500+ Likes (4–6 per blog)
         like_count = 0
+        blog_content_type = ContentType.objects.get_for_model(Blog)
         for blog in blogs:
             likers = random.sample(users, k=random.randint(4, 6))
             for liker in likers:
-                if not Likes.objects.filter(blog=blog, user=liker).exists():
+                if not Likes.objects.filter(user=liker, content_type=blog_content_type, object_id=blog.pk).exists():
                     Likes.objects.create(
-                        blog=blog,
                         user=liker,
+                        content_type=blog_content_type,
+                        object_id=blog.pk,
                         created_at=fake.date_time_this_month()
                     )
                     like_count += 1
