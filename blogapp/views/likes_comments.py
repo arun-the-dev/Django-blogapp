@@ -6,9 +6,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 from ..models import Blog,Likes,Comments
 
-BLOG= ContentType.objects.get_for_model(Blog)
 @login_required
-def toggle_like(request,id):
+def toggle_like(request,id):  
+    BLOG= ContentType.objects.get_for_model(Blog)
     blog = Blog.objects.get(pk = id)
     likes = Likes.objects.filter(user=request.user,object_id = blog.pk ,content_type =  BLOG).exists()
     if not likes:
