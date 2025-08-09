@@ -33,7 +33,9 @@ urlpatterns = [
     path("account/author/<int:author_id>/",author_account,name="author-account"),
     path("foregt-password/",user_forget_password,name="user-forget-password"),
     path("verify-otp",verify_otp,name="verify-otp"),
-    path("reset-passord",reset_password,name="reset-password"),   
+    path("reset-passord",reset_password,name="reset-password"),
+    # only for development usage
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 if settings.DEBUG:
